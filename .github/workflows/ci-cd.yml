@@ -26,7 +26,7 @@ jobs:
       # Step 3: Install backend dependencies (root)
       - name: Install backend dependencies
         run: npm install
-        working-directory: ./
+        working-directory: .
 
       # # Step 4: Install frontend dependencies
       # - name: Install frontend dependencies
@@ -68,7 +68,7 @@ jobs:
             fi
 
             # Navigate to the directory
-            # cd ~/BiddingApp/    check this once
+            cd ~/BiddingApp/   
 
             # Install backend dependencies
             npm install
