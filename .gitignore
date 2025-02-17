@@ -5,6 +5,5 @@
 /frontend/dist
 node_modules
 
-
-./config/config.env
+config/config.env
 
