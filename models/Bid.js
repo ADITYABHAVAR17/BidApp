@@ -7,7 +7,7 @@ const BidSchema = new mongoose.Schema({
   phone: { type: String, required: true },
   price: { type: Number, required: true },
   isVerified: { type: Boolean, default: false },
-  otp: { type: String }, // Temporarily store the OTP until verification
+  otp: { type: String }, // For bid verification (if needed)
   createdAt: { type: Date, default: Date.now },
 });
 

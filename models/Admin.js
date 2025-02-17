@@ -7,7 +7,6 @@ const AdminSchema = new mongoose.Schema({
   password: { type: String, required: true },
 });
 
-// Hash the password before saving the admin
 AdminSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   try {

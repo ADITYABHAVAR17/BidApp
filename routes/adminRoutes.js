@@ -3,17 +3,18 @@ const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
 const auth = require('../middlewares/auth');
+const multer = require('multer');
 
-// (Optional) Register a new admin (only needed if you want to allow admin signup)
-// router.post('/register', adminController.registerAdmin);
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
-// Admin login
+// Admin login and other routes...
 router.post('/login', adminController.loginAdmin);
 
-// Register a product for bidding (protected route)
-router.post('/product', auth, adminController.registerProduct);
+// Register a product with image upload (protected route)
+router.post('/product', auth, upload.single('image'), adminController.registerProduct);
 
-// View all bids for a given product (protected route)
+// View bids route...
 router.get('/product/:productId/bids', auth, adminController.getProductBids);
 
 module.exports = router;

@@ -4,7 +4,7 @@ const Product = require('../models/Product');
 const generateOTP = require('../utils/otpGenerator');
 const sendEmail = require('../utils/email');
 
-// Submit a bid for a product and send an OTP for verification
+// Submit a bid for a product and send an OTP for bid verification
 exports.submitBid = async (req, res) => {
   const { productId, email, phone, price } = req.body;
   try {
@@ -12,7 +12,7 @@ exports.submitBid = async (req, res) => {
     const product = await Product.findById(productId);
     if (!product) return res.status(404).json({ msg: 'Product not found' });
     
-    // Generate a 6-digit OTP
+    // Generate a 6-digit OTP (if needed for bid verification)
     const otp = generateOTP();
     
     // Create a new bid (initially not verified)
@@ -26,7 +26,7 @@ exports.submitBid = async (req, res) => {
     });
     await bid.save();
     
-    // Send the OTP to the user's email
+    // Optionally, send the OTP to the user's email for bid verification
     const subject = 'Your Bid OTP Verification';
     const text = `Your OTP for bid verification is: ${otp}`;
     await sendEmail(email, subject, text);

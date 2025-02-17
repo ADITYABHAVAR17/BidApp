@@ -45,17 +45,28 @@ exports.loginAdmin = async (req, res) => {
 };
 
 // Register a new product for bidding (admin-protected)
+// backend/controllers/adminController.js
+
 exports.registerProduct = async (req, res) => {
   const { name, description } = req.body;
   try {
-    let product = new Product({ name, description });
-    await product.save();
-    res.json(product);
+    const newProduct = new Product({
+      name,
+      description,
+    });
+    // If an image file was uploaded, store it in the database
+    if (req.file) {
+      newProduct.image = req.file.buffer.toString('base64');
+      newProduct.imageContentType = req.file.mimetype;
+    }
+    await newProduct.save();
+    res.json(newProduct);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 };
+
 
 // View all bids for a given product (admin-protected)
 exports.getProductBids = async (req, res) => {
